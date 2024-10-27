@@ -347,116 +347,38 @@
    <p style="text-align:center; margin-top:20px;">&copy; 2024 ShopEasy. All rights reserved.</p>  
 </footer> 
 <script>  
- document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.querySelector('.product-slider');
-    const slides = Array.from(slider.children);
-    const dotsContainer = document.querySelector('.dots');
-    let index = 0;
-    let isDragging = false;
-    let startPos = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-    const dragThreshold = 50; // Adjusted threshold for better responsiveness
-
-    // Create dots for each slide
-    slides.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-        if (i === index) dot.classList.add('active');
-        dot.addEventListener('click', () => {
-            index = i;
-            updateSliderPosition();
-        });
-        dotsContainer.appendChild(dot);
-    });
-
-    const dots = dotsContainer.children;
-
-    function updateSliderPosition() {
-        slider.style.transform = `translateX(${-index * 100}%)`;
-        Array.from(dots).forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-
 document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.querySelector('.product-slider');
-    const slides = Array.from(slider.children);
-    const dotsContainer = document.querySelector('.dots');
-    let index = 0;
-    let isDragging = false;
-    let startPos = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-    const dragThreshold = 50; // Adjusted threshold for better responsiveness
+  const slider = document.querySelector('.product-slider');
+  const slides = Array.from(slider.children);
+  const dotsContainer = document.querySelector('.dots');
+  let index = 0;
+  let isDragging = false;
+  let startPos = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+  const dragThreshold = 50; // Adjusted threshold for better responsiveness
 
-    // Create dots for each slide
-    slides.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-        if (i === index) dot.classList.add('active');
-        dot.addEventListener('click', () => {
-            index = i;
-            updateSliderPosition();
-        });
-        dotsContainer.appendChild(dot);
-    });
+  // Create dots for each slide
+  slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (i === index) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+          index = i;
+          updateSliderPosition();
+      });
+      dotsContainer.appendChild(dot);
+  });
 
-    const dots = dotsContainer.children;
+  const dots = dotsContainer.children;
 
-    function updateSliderPosition() {
-        slider.style.transform = `translateX(${-index * 100}%)`;
-        Array.from(dots).forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-
-    function startDragging(e) {
-        isDragging = true;
-        startPos = e.pageX || e.touches[0].clientX;
-        slider.style.transition = 'none'; // Disable transition for smooth dragging
-    }
-
-    function endDragging() {
-        if (!isDragging) return;
-        isDragging = false;
-        const movedBy = currentTranslate - prevTranslate;
-
-        // Check if slide should change
-        if (movedBy < -dragThreshold && index < slides.length - 1) index++;
-        if (movedBy > dragThreshold && index > 0) index--;
-
-        slider.style.transition = 'transform 0.3s ease'; // Re-enable transition
-        updateSliderPosition();
-        prevTranslate = -index * 100; // Set the new prevTranslate based on index
-    }
-
-    function dragMove(e) {
-        if (!isDragging) return;
-        const currentPosition = e.pageX || e.touches[0].clientX;
-        currentTranslate = prevTranslate + (currentPosition - startPos);
-        slider.style.transform = `translateX(${currentTranslate}px)`; // Update slider position
-    }
-
-    // Event listeners for dragging
-    slider.addEventListener('mousedown', startDragging);
-    slider.addEventListener('mouseup', endDragging);
-    slider.addEventListener('mouseleave', endDragging);
-    slider.addEventListener('mousemove', dragMove);
-    slider.addEventListener('touchstart', (e) => {
-        startDragging(e);
-        e.preventDefault(); // Prevent default touch behavior
-    });
-    slider.addEventListener('touchend', endDragging);
-    slider.addEventListener('touchmove', (e) => {
-        dragMove(e);
-        e.preventDefault(); // Prevent default touch behavior
-    });
-
-    // Reset slider position on window resize
-    window.addEventListener('resize', updateSliderPosition);
+  function updateSliderPosition() {
+      slider.style.transform = `translateX(${-index * 100}%)`;
+      Array.from(dots).forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+      });
+  }
 });
-
 </script>
 </body>  
 </html>
