@@ -1,0 +1,436 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+   <meta charset="UTF-8">  
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+   <title>Product Details</title>  
+   <style>  
+      /* General Styles */  
+      body {  
+        font-family: 'Roboto', sans-serif;  
+        margin: 0;  
+        padding: 0;  
+        background-color: #f4f7f6;  
+        color: #333;  
+      }  
+  
+      h1, h2, p {  
+        margin: 0 0 10px;  
+      }  
+  
+      .container {  
+        max-width: 1200px;  
+        margin: 20px auto;  
+        padding: 20px;  
+        background-color: white;  
+        border-radius: 10px;  
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  
+      }  
+  
+      img {  
+        max-width: 100%;  
+        border-radius: 10px;  
+      }  
+  
+      /* Product Details Section */  
+      .product-details {  
+        display: flex;  
+        justify-content: space-between;  
+        flex-wrap: wrap;  
+        margin-bottom: 30px;  
+      }  
+  
+      .product-image {
+  flex: 1;
+  max-width: 448px; 
+  margin-right: 20px;  
+  position: relative;  
+  overflow: hidden;  
+  border: 1px solid #bbb; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.product-slider {
+  display: flex;  
+  transition: transform 0.5s ease-in-out;  
+}
+
+.product-slider img {  
+  width: 448px; /* Set width to 408px */
+  height: 408px; /* Set height to 408px */
+  object-fit: cover; /* This will maintain the aspect ratio of the image */
+  flex-shrink: 0; /* Prevents images from shrinking */
+}
+
+      .product-info h1 {
+    font-size: 32px;
+    color: #2C3E50; /* Dark Slate Blue */
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .price-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .price-details .price {
+    font-size: 30px;
+    color: #388E3C; /* Green for price */
+    font-weight: bold;
+  }
+
+  .price-details .discounted {
+    text-decoration: line-through;
+    color: #E57373; /* Light Red for discounted price */
+  }
+
+  /* Styled offer tag for grocery-themed color */
+  .price-details .offer {
+    color: #FFFFFF; /* White text */
+    background-color: #FF7043; /* Warm Orange */
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .product-description {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #607D8B; /* Cool Gray for text */
+  }
+
+  /* Manufacturer details styled for grocery theme */
+  .manufacturer-details {
+    font-size: 16px;
+    color: #455A64; /* Dark Gray */
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #E0F7FA; /* Light Aqua */
+    border-left: 4px solid #26A69A; /* Teal border */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .manufacturer-details p {
+    margin: 5px 0;
+  }
+
+/*
+  .cart-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #43A047, #388E3C);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .cart-btn:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    background: #2E7D32; /* Slightly darker green on hover 
+  }
+    */  .cart-btn {  
+   padding: 12px 30px;  
+   border: none;  
+   border-radius: 8px;  
+   font-size: 16px;  
+   cursor: pointer;  
+   background: linear-gradient(135deg, #28a745, #218838);  
+   color: white;  
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);  
+   transition: all 0.3s ease-in-out;  
+   position: relative;  
+   overflow: hidden;
+   width: 200px;
+}
+
+.cart-btn::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: -100%;
+   width: 100%;
+   height: 100%;
+   background: rgba(255, 255, 255, 0.2);
+   transition: all 0.3s;
+}
+
+.cart-btn:hover::before {
+   left: 100%;
+}
+
+.cart-btn:hover {  
+   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);  
+   transform: translateY(-2px);  
+}
+ 
+  
+      /* Related Products */  
+      .related-products {  
+        margin-top: 30px;  
+      }  
+  
+      .related-heading h2 {  
+        margin-bottom: 20px;  
+        font-size: 24px;  
+      }  
+  
+      .product-grid {  
+        display: flex;  
+        gap: 20px;  
+        overflow-x: auto;  
+        padding-bottom: 20px;  
+      }  
+  
+      .product-box {  
+        min-width: 220px;  
+        padding: 15px;  
+        background-color: white;  
+        border-radius: 10px;  
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  
+        text-align: center;  
+      }  
+  
+      .product-box img {  
+        max-width: 100%;  
+        margin-bottom: 10px;  
+      }  
+  
+      .product-box strong {  
+        display: block;  
+        font-size: 18px;  
+        margin-bottom: 10px;  
+      }  
+  
+      .product-box .price {  
+        font-size: 20px;  
+        color: #27ae60;  
+        margin-bottom: 10px;  
+      }  
+  
+
+      /* Responsive */  
+      @media screen and (max-width: 768px) {  
+        .product-details {  
+           flex-direction: column;  
+           align-items: center;  
+        }  
+        .product-image {
+    max-width: 100%; 
+    margin: 0 auto;
+    border: none;
+    max-width: 500px;
+  }
+
+  .product-slider img {
+    width: 100%; 
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+    border-radius: 0; /* Remove border radius for mobile */
+  
+    height: 350px; 
+  }
+        .product-info {  
+           width: 100%;  
+        }  
+      }  
+      .dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .dot {
+         height: 12px;
+         width: 12px;
+         margin: 0 5px;
+         background-color:#A8D080;
+         border-radius: 50%;
+         display: inline-block;
+         transition: background-color 0.3s ease;
+         cursor: pointer;
+      }
+
+      .dot.active {
+         background-color:  #33691E;
+      }
+
+      /* Responsive Adjustments */  
+      @media screen and (max-width: 768px) {  
+        .product-details {  
+           flex-direction: column;  
+           align-items: center;  
+        }  
+      }
+   
+   </style>  
+</head>  
+<body>  
+  
+<div class="container">  
+   <!-- Product Details Section -->  
+   <div class="product-details">  
+      <div class="product-image">  
+        <div class="product-slider">  
+           <img src="images/category/babyCare.png" alt="Mustard Oil 1">  
+           <img src="images/category/beauty.png" alt="Mustard Oil 2">  
+           <img src="images/category/persnalCare.png" alt="Mustard Oil 3">  
+        </div>  
+        <div class="dots"></div>  
+      </div>  
+      <div class="product-info">  
+        <h1>Fortune Premium Kachi Ghani Pure Mustard Oil</h1>  
+        <div class="price-details">  
+           <span class="price">₹200</span>  
+           <span class="discounted">₹250</span>  
+           <span class="offer">20% off</span>  
+        </div>  
+         
+  
+        <!-- Manufacturer, Expiry Date, and Delivery Time -->  
+        <div class="manufacturer-details">  
+           <p><strong>Manufacturer:</strong> XYZ Pharmaceuticals</p>  
+           <p><strong>Expiry Date:</strong> December 2025</p>  
+           <p><strong>Delivery Time:</strong> 3-5 business days</p>  
+        </div>  
+  
+        <button class="cart-btn">Add to Cart</button>  
+      </div>  
+   </div>  
+  
+   <!-- Description and Review Section -->  
+   <div id="description-review">  
+      <div class="section-heading">Product Description</div>  
+      <p>This mustard oil is produced using traditional methods to retain its natural pungency and purity, ensuring great taste and health benefits.</p>  
+  
+      <div class="section-heading">Customer Reviews</div>  
+      <div class="customer-reviews">  
+        <div class="review">  
+           <strong>John Doe</strong>  
+           <p>Great quality! The oil has a rich aroma and is perfect for my cooking needs.</p>  
+        </div>  
+        <div class="review">  
+           <strong>Jane Smith</strong>  
+           <p>This is my go-to mustard oil. Always delivers the perfect flavor to my dishes.</p>  
+        </div>  
+      </div>  
+   </div>  
+  
+   <!-- Related Products Section -->  
+   <div class="related-products">  
+      <div class="related-heading">  
+        <h2>Related Products</h2>  
+      </div>  
+      <div class="product-grid">  
+        <div class="product-box">  
+           <img src="https://example.com/product1.jpg" alt="Product 1">  
+           <strong>Product 1</strong>  
+           <div class="price">₹150</div>  
+           <button class="cart-btn">Add to Cart</button>  
+        </div>  
+        <div class="product-box">  
+           <img src="https://example.com/product2.jpg" alt="Product 2">  
+           <strong>Product 2</strong>  
+           <div class="price">₹180</div>  
+           <button class="cart-btn">Add to Cart</button>  
+        </div>  
+        <div class="product-box">  
+           <img src="https://example.com/product3.jpg" alt="Product 3">  
+           <strong>Product 3</strong>  
+           <div class="price">₹120</div>  
+           <button class="cart-btn">Add to Cart</button>  
+        </div>  
+      </div>  
+   </div>  
+</div>  
+  
+<footer>  
+   <p style="text-align:center; margin-top:20px;">&copy; 2024 ShopEasy. All rights reserved.</p>  
+</footer> 
+<script>  
+   document.addEventListener('DOMContentLoaded', function() {
+      const slider = document.querySelector('.product-slider');
+      const slides = Array.from(slider.children);
+      const dotsContainer = document.querySelector('.dots');
+      let index = 0;
+      let isDragging = false;
+      let startPos = 0;
+      let currentTranslate = 0;
+      let prevTranslate = 0;
+      const dragThreshold = 100; // Threshold to change slide on drag
+
+      // Create dots for each slide
+      slides.forEach((_, i) => {
+         const dot = document.createElement('span');
+         dot.classList.add('dot');
+         if (i === index) dot.classList.add('active');
+         dot.addEventListener('click', () => {
+            index = i;
+            updateSliderPosition();
+         });
+         dotsContainer.appendChild(dot);
+      });
+
+      const dots = dotsContainer.children;
+
+      function updateSliderPosition() {
+         slider.style.transform = `translateX(${-index * 100}%)`;
+         Array.from(dots).forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+         });
+      }
+
+      function startDragging(e) {
+         isDragging = true;
+         startPos = e.pageX || e.touches[0].clientX;
+         slider.style.transition = 'none';
+      }
+
+      function endDragging() {
+         if (!isDragging) return;
+         isDragging = false;
+         const movedBy = currentTranslate - prevTranslate;
+
+         // Check if slide should change
+         if (movedBy < -dragThreshold && index < slides.length - 1) index++;
+         if (movedBy > dragThreshold && index > 0) index--;
+
+         slider.style.transition = 'transform 0.3s ease';
+         updateSliderPosition();
+         prevTranslate = -index * 100;
+      }
+
+      function dragMove(e) {
+         if (!isDragging) return;
+         const currentPosition = e.pageX || e.touches[0].clientX;
+         currentTranslate = prevTranslate + currentPosition - startPos;
+         slider.style.transform = `translateX(${currentTranslate}px)`;
+      }
+
+      // Event listeners for dragging
+      slider.addEventListener('mousedown', startDragging);
+      slider.addEventListener('mouseup', endDragging);
+      slider.addEventListener('mouseleave', endDragging);
+      slider.addEventListener('mousemove', dragMove);
+      slider.addEventListener('touchstart', startDragging);
+      slider.addEventListener('touchend', endDragging);
+      slider.addEventListener('touchmove', dragMove);
+
+      // Reset slider position on window resize
+      window.addEventListener('resize', updateSliderPosition);
+   });
+</script>
+</body>  
+</html>
